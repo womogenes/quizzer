@@ -6,6 +6,7 @@
     <title>LAPS quiz</title>
     <!-- Our resources -->
     <link rel="stylesheet" href="css/style.css" />
+    <script src="js/quiz1.js" defer></script>
     <script src="js/index.js" defer></script>
 
     <!-- Apline JS -->
@@ -40,7 +41,7 @@
   <body class="flex h-full flex-col items-center">
     <main class="flex h-full w-full" x-data>
       <!-- Left column -->
-      <div class="flex h-full w-full flex-col gap-4">
+      <div class="flex h-full w-full flex-col">
         <img class="h-2/3 w-full object-cover" :src="$store.curQues.imageURL" />
 
         <div class="p-6">
@@ -54,10 +55,10 @@
         <div class="grid w-full grid-cols-1 gap-4" id="options-grid">
           <template x-for="(option, index) in $store.curQues.options">
             <div
-              class="rounded border bg-white px-4 py-4 transition-all hover:cursor-pointer hover:bg-neutral-50 hover:shadow-lg"
+              :class="`rounded border-2 px-4 py-4 transition-all hover:cursor-pointer hover:bg-neutral-50 hover:shadow-lg ${['correct', 'incorrect'].includes($store.answerStatus) ? ($store.curQues.answer === index ? 'bg-green-50 border-green-100' : 'bg-red-50 border-red-100') : 'bg-white'} }`"
               @click="answer(index)"
             >
-              <span class="text-neutral-400" x-text="`${index}.`"></span>
+              <span class="text-neutral-400" x-text="`${index + 1}.`"></span>
               <span x-text="option"></span>
             </div>
           </template>

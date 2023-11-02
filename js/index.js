@@ -1,18 +1,9 @@
 const $ = document.querySelector.bind(document);
 
-const questions = [
-  [
-    'https://picsum.photos/1920/1080',
-    'What is the answer to this question?',
-    ['A', 'B', 'C', 'D', 'E'],
-    2,
-  ],
-];
-
 document.addEventListener('alpine:init', () => {
   console.log('Alpine initialized.');
 
-  const curIdx = 0;
+  Alpine.store('curIdx', 0);
 
   const loadQuestion = (questionArr) => {
     const [imageURL, question, options, answer] = questionArr;
@@ -33,8 +24,10 @@ document.addEventListener('alpine:init', () => {
       index === Alpine.store('curQues').answer ? 'correct' : 'incorrect',
     );
     $('#options-grid').style.pointerEvents = 'none';
-    $('#options-grid').style.opacity = 0.5;
+    $('#options-grid').style.opacity = 0.8;
+
+    Alpine.store('curIdx', Alpine.store('curIdx') + 1);
   };
 
-  loadQuestion(questions[curIdx]);
+  loadQuestion(questions[Alpine.store('curIdx')]);
 });

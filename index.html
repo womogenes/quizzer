@@ -1,0 +1,88 @@
+<!doctype html>
+<html class="h-full" lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>LAPS quiz</title>
+    <!-- Our resources -->
+    <link rel="stylesheet" href="css/style.css" />
+    <script src="js/index.js" defer></script>
+
+    <!-- Apline JS -->
+    <script src="https://cdn.jsdelivr.net/npm/@alpinejs/persist@3.x.x/dist/cdn.min.js"></script>
+    <script
+      defer
+      src="https://cdn.jsdelivr.net/npm/@alpinejs/mask@3.x.x/dist/cdn.min.js"
+    ></script>
+    <script
+      defer
+      src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"
+    ></script>
+    <style>
+      /* No blips, Alpine feature */
+      [x-cloak] {
+        display: none !important;
+      }
+    </style>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Icons -->
+    <link href="https://cdn.lineicons.com/4.0/lineicons.css" rel="stylesheet" />
+  </head>
+
+  <body class="flex h-full flex-col items-center">
+    <main class="flex h-full w-full" x-data>
+      <!-- Left column -->
+      <div class="flex h-full w-full flex-col gap-4">
+        <img class="h-2/3 w-full object-cover" :src="$store.curQues.imageURL" />
+
+        <div class="p-6">
+          <p class="text-3xl font-bold" x-text="$store.curQues.question"></p>
+        </div>
+      </div>
+
+      <!-- Right column -->
+      <div class="flex w-full flex-col items-start gap-4 p-12">
+        <!-- Options grid -->
+        <div class="grid w-full grid-cols-1 gap-4" id="options-grid">
+          <template x-for="(option, index) in $store.curQues.options">
+            <div
+              class="rounded border bg-white px-4 py-4 transition-all hover:cursor-pointer hover:bg-neutral-50 hover:shadow-lg"
+              @click="answer(index)"
+            >
+              <span class="text-neutral-400" x-text="`${index}.`"></span>
+              <span x-text="option"></span>
+            </div>
+          </template>
+        </div>
+
+        <div x-data x-cloak class="text-2xl font-bold">
+          <div
+            class="text-green-600"
+            x-show="$store.answerStatus == 'correct'"
+            x-transition
+          >
+            Correct 😄
+          </div>
+          <div
+            class="text-red-600"
+            x-show="$store.answerStatus == 'incorrect'"
+            x-transition
+          >
+            Incorrect 🙁
+          </div>
+        </div>
+
+        <!-- Debug stuff -->
+        <pre></pre>
+      </div>
+    </main>
+  </body>
+</html>

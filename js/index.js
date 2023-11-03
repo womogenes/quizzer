@@ -7,14 +7,20 @@ const typograph = (str) => {
     }
     return content;
   };
-  const replacements = [[/"([^"]+)?"/g, (_, p1) => `“${p1}”`]];
+  const replacements = [
+    [/(?<=[a-zA-Z])"([,.])(?!\.)/g, (_, p1) => `${p1}"`], // Put periods, commas *inside* quotes
+    [/"([^"]+)?"/g, (_, p1) => `“${p1}”`],
+  ];
   return runReplacements(str, replacements);
 };
 
 document.addEventListener('alpine:init', () => {
+  Alpine.store('curIdx', 0);
   Alpine.store('curQues', {});
+  Alpine.store('chosenOption', -1);
   Alpine.store('quizLoaded', false);
-  console.log('woah!');
+  Alpine.store('answerHistory', []);
+  Alpine.store('answerStatus', 'answering');
 });
 
 document.addEventListener('alpine:init', async () => {
@@ -22,9 +28,6 @@ document.addEventListener('alpine:init', async () => {
 
   console.log('Loading quiz questions...');
   const questions = await fetchSpreadsheet('Questions');
-  console.log(questions);
-
-  Alpine.store('curIdx', 0);
   Alpine.store('questions', questions);
   Alpine.store('quizLoaded', true);
 
@@ -41,23 +44,36 @@ document.addEventListener('alpine:init', async () => {
   };
 
   window.answer = (index) => {
-    Alpine.store(
-      'answerStatus',
-      index === Alpine.store('curQues').answer ? 'correct' : 'incorrect',
-    );
+    const isCorrect = index === Alpine.store('curQues').answer;
+    Alpine.store('answerStatus', isCorrect ? 'correct' : 'incorrect');
+    Alpine.store('answerHistory', [
+      ...Alpine.store('answerHistory'),
+      isCorrect,
+    ]);
     Alpine.store('chosenOption', index);
     $('#options-grid').style.pointerEvents = 'none';
-    $('#options-grid').style.opacity = 0.9;
+    $('#options-grid').style.opacity = 0.8;
 
-    window.setTimeout(() => {
-      $('#options-grid').style.pointerEvents = 'auto';
-      $('#options-grid').style.opacity = 1.0;
-      $('#image').src = '';
-      Alpine.store('answerStatus', 'answering');
-      Alpine.store('curIdx', (Alpine.store('curIdx') + 1) % questions.length);
-      loadQuestion(questions[Alpine.store('curIdx')]);
-    }, 2000);
+    // window.setTimeout(nextQuestion, 2000);
   };
+
+  window.nextQuestion = () => {
+    $('#options-grid').style.pointerEvents = 'auto';
+    $('#options-grid').style.opacity = 1.0;
+    $('#image').src = '';
+    Alpine.store('answerStatus', 'answering');
+    Alpine.store('curIdx', (Alpine.store('curIdx') + 1) % questions.length);
+    loadQuestion(questions[Alpine.store('curIdx')]);
+  };
+
+  window.addEventListener('keyup', () => {
+    if (Alpine.store('answerStatus') === 'answering') return;
+    window.setTimeout(nextQuestion, 10);
+  });
+  window.addEventListener('touchend', () => {
+    if (Alpine.store('answerStatus') === 'answering') return;
+    nextQuestion();
+  });
 
   loadQuestion(questions[Alpine.store('curIdx')]);
 });

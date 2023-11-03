@@ -47,12 +47,12 @@
         class="flex max-w-5xl flex-col gap-4 sm:flex-row sm:gap-6 md:p-12"
         x-show="$store.quizLoaded"
         x-cloak
-        x-data
+        x-data="{ answered() { return $store.answerStatus.endsWith('correct'); } }"
       >
         <!-- Left column -->
         <div class="flex w-full flex-col" x-data>
           <img
-            class="h-48 w-full border-none bg-neutral-200 object-cover sm:h-96 md:rounded-lg"
+            class="h-24 w-full border-none bg-neutral-200 object-cover sm:block sm:h-96 md:rounded-lg"
             :src="$store.curQues.imageURL"
             id="image"
           />
@@ -70,7 +70,7 @@
             </div>
 
             <p
-              class="text-xl font-bold sm:text-3xl"
+              class="text-lg font-bold md:text-3xl"
               x-text="$store.curQues.question"
             ></p>
           </div>
@@ -78,18 +78,33 @@
 
         <!-- Right column -->
         <div
-          class="flex w-full flex-col items-start gap-4 px-4 sm:p-0 sm:pr-6 sm:pt-6 md:pr-0 md:pt-0"
+          class="flex w-full flex-col items-start gap-4 px-0 sm:p-0 sm:px-4 sm:pr-6 sm:pt-6 md:pr-0 md:pt-0"
         >
+          <!-- Scoreboard -->
+          <div>
+            Score:
+            <span
+              class="font-bold"
+              x-text="$store.answerHistory.reduce((a, b) => a + b, 0)"
+            ></span>
+            /
+            <span class="font-bold" x-text="$store.answerHistory.length"></span>
+          </div>
+
           <!-- Options grid -->
-          <div class="grid w-full grid-cols-1 gap-4" id="options-grid" x-data>
+          <div
+            class="grid w-full grid-cols-1 gap-0 border-y sm:gap-4 sm:border-none"
+            id="options-grid"
+            x-data
+          >
             <template x-for="(option, index) in $store.curQues.options">
               <div
-                :class="`rounded border-2 px-4 py-4 transition-all hover:cursor-pointer hover:bg-neutral-50 ${
-                  ['correct', 'incorrect'].includes($store.answerStatus) && [$store.chosenOption, $store.curQues.answer].includes(index)
-                        ? ($store.curQues.answer === index
-                            ? 'bg-green-100 border-green-200'
-                            : 'bg-red-100 border-red-200')
-                        : 'bg-white'
+                :class="`sm:rounded border sm:border-2 px-4 py-2 sm:px-4 sm:py-4 transition-all hover:cursor-pointer hover:bg-neutral-50 ${
+                  answered() && [$store.chosenOption, $store.curQues.answer].includes(index)
+                    ? ($store.curQues.answer === index
+                        ? '!bg-green-100 !border-green-200 z-20'
+                        : '!bg-red-100 !border-red-200 z-20')
+                    : 'bg-white'
                   } }`"
                 @click="answer(index)"
               >
@@ -102,20 +117,27 @@
             </template>
           </div>
 
-          <div x-data x-cloak class="text-2xl font-bold">
+          <div
+            class="flex flex-col gap-2 px-4 text-2xl font-bold"
+            x-data
+            x-cloak
+            x-show="answered()"
+            x-transition
+          >
             <div
               class="text-green-600"
               x-show="$store.answerStatus == 'correct'"
-              x-transition
             >
               Correct 😄
             </div>
             <div
               class="text-red-600"
               x-show="$store.answerStatus == 'incorrect'"
-              x-transition
             >
               Incorrect 🙁
+            </div>
+            <div class="text-base font-normal text-neutral-600">
+              Press any key or tap to continue
             </div>
           </div>
         </div>

@@ -51,6 +51,13 @@
 
       <!-- Right column -->
       <div class="flex w-full flex-col items-start gap-4 p-12">
+        <div x-data>
+          <span class="font-bold">
+            Question <span x-text="$store.curIdx + 1"></span> of
+            <span x-text="$store.questions.length"></span>
+          </span>
+        </div>
+
         <!-- Options grid -->
         <div class="grid w-full grid-cols-1 gap-4" id="options-grid">
           <template x-for="(option, index) in $store.curQues.options">

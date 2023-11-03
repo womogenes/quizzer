@@ -39,57 +39,84 @@
   </head>
 
   <body class="flex h-full flex-col items-center">
-    <main class="flex h-full w-full" x-data>
-      <!-- Left column -->
-      <div class="flex h-full w-full flex-col">
-        <img class="h-2/3 w-full object-cover" :src="$store.curQues.imageURL" />
+    <main class="flex h-full w-full justify-center">
+      <!-- Main display content -->
+      <div
+        class="flex max-w-5xl flex-col gap-4 sm:flex-row sm:gap-6 md:p-12"
+        x-show="$store.quizLoaded"
+        x-cloak
+        x-data
+      >
+        <!-- Left column -->
+        <div class="flex w-full flex-col" x-data>
+          <img
+            class="h-48 w-full border-none bg-neutral-200 object-cover sm:h-96 md:rounded-lg"
+            :src="$store.curQues.imageURL"
+            id="image"
+          />
 
-        <div class="p-6">
-          <p class="text-3xl font-bold" x-text="$store.curQues.question"></p>
-        </div>
-      </div>
-
-      <!-- Right column -->
-      <div class="flex w-full flex-col items-start gap-4 p-12">
-        <div x-data>
-          <span class="font-bold">
-            Question <span x-text="$store.curIdx + 1"></span> of
-            <span x-text="$store.questions.length"></span>
-          </span>
-        </div>
-
-        <!-- Options grid -->
-        <div class="grid w-full grid-cols-1 gap-4" id="options-grid">
-          <template x-for="(option, index) in $store.curQues.options">
-            <div
-              :class="`rounded border-2 px-4 py-4 transition-all hover:cursor-pointer hover:bg-neutral-50 hover:shadow-lg ${['correct', 'incorrect'].includes($store.answerStatus) ? ($store.curQues.answer === index ? 'bg-green-50 border-green-100' : 'bg-red-50 border-red-100') : 'bg-white'} }`"
-              @click="answer(index)"
-            >
-              <span class="text-neutral-400" x-text="`${index + 1}.`"></span>
-              <span x-text="option"></span>
+          <div class="flex flex-col gap-4 p-4 pb-0 pt-6 md:px-0">
+            <div>
+              <span>
+                Question
+                <span class="font-bold" x-text="$store.curIdx + 1"></span> of
+                <span
+                  class="font-bold"
+                  x-text="$store.questions?.length"
+                ></span>
+              </span>
             </div>
-          </template>
-        </div>
 
-        <div x-data x-cloak class="text-2xl font-bold">
-          <div
-            class="text-green-600"
-            x-show="$store.answerStatus == 'correct'"
-            x-transition
-          >
-            Correct 😄
-          </div>
-          <div
-            class="text-red-600"
-            x-show="$store.answerStatus == 'incorrect'"
-            x-transition
-          >
-            Incorrect 🙁
+            <p
+              class="text-xl font-bold sm:text-3xl"
+              x-text="$store.curQues.question"
+            ></p>
           </div>
         </div>
 
-        <!-- Debug stuff -->
-        <pre></pre>
+        <!-- Right column -->
+        <div
+          class="flex w-full flex-col items-start gap-4 px-4 sm:p-0 sm:pr-6 sm:pt-6 md:pr-0 md:pt-0"
+        >
+          <!-- Options grid -->
+          <div class="grid w-full grid-cols-1 gap-4" id="options-grid" x-data>
+            <template x-for="(option, index) in $store.curQues.options">
+              <div
+                :class="`rounded border-2 px-4 py-4 transition-all hover:cursor-pointer hover:bg-neutral-50 ${
+                  ['correct', 'incorrect'].includes($store.answerStatus) && [$store.chosenOption, $store.curQues.answer].includes(index)
+                        ? ($store.curQues.answer === index
+                            ? 'bg-green-100 border-green-200'
+                            : 'bg-red-100 border-red-200')
+                        : 'bg-white'
+                  } }`"
+                @click="answer(index)"
+              >
+                <span
+                  class="mr-2 text-neutral-400"
+                  x-text="`${'ABCDE'.substring(index, index+1)}.`"
+                ></span>
+                <span x-text="option"></span>
+              </div>
+            </template>
+          </div>
+
+          <div x-data x-cloak class="text-2xl font-bold">
+            <div
+              class="text-green-600"
+              x-show="$store.answerStatus == 'correct'"
+              x-transition
+            >
+              Correct 😄
+            </div>
+            <div
+              class="text-red-600"
+              x-show="$store.answerStatus == 'incorrect'"
+              x-transition
+            >
+              Incorrect 🙁
+            </div>
+          </div>
+        </div>
       </div>
     </main>
   </body>

@@ -58,33 +58,40 @@
         class="flex max-w-5xl flex-col items-start gap-4 sm:flex-row sm:gap-6 md:p-12"
         x-show="$store.quizLoaded"
         x-cloak
-        x-data="{ answered() { return $store.answerStatus.endsWith('correct'); } }"
+        x-data="{
+          answered() { return $store.answerStatus.endsWith('correct'); },
+          transitionOpacity() { return `transition-opacity ${$store.answerStatus === 'transitioning' ? 'opacity-0 duration-50' : 'opacity-100 duration-600'}` }
+        }"
       >
         <!-- Left column -->
         <div
           class="flex w-full flex-col sm:flex-col-reverse md:flex-col"
           x-data
         >
-          <img
-            class="h-24 bg-neutral-200 object-cover sm:aspect-video sm:h-auto md:rounded-lg"
-            :src="$store.curQues.imageURL"
-            id="image"
-          />
+          <div
+            class="relative h-24 overflow-hidden sm:aspect-video sm:h-auto md:rounded-lg"
+          >
+            <div
+              class="absolute h-full w-full animate-pulse bg-neutral-200"
+            ></div>
+            <img
+              class="absolute h-full w-full object-cover"
+              :class="transitionOpacity()"
+              :src="$store.curQues.imageURL"
+              id="image"
+            />
+          </div>
 
           <div class="flex flex-col gap-4 px-4 pt-4 sm:pb-4 md:px-0">
-            <div>
-              <span>
-                Question
-                <span class="font-bold" x-text="$store.curIdx + 1"></span> of
-                <span
-                  class="font-bold"
-                  x-text="$store.questions?.length"
-                ></span>
-              </span>
-            </div>
+            <span>
+              Question
+              <span class="font-bold" x-text="$store.curIdx + 1"></span> of
+              <span class="font-bold" x-text="$store.questions?.length"></span>
+            </span>
 
             <p
               class="text-lg font-bold md:text-2xl"
+              :class="transitionOpacity()"
               x-text="$store.curQues.question"
             ></p>
           </div>
@@ -92,8 +99,10 @@
 
         <!-- Right column -->
         <div
-          class="flex w-full flex-col items-start gap-4 px-0 sm:p-0 sm:px-4 sm:pr-6 sm:pt-6 md:pr-0 md:pt-0"
+          class="flex w-full select-none flex-col items-start gap-4 px-0 sm:p-0 sm:px-4 sm:pr-6 sm:pt-6 md:pr-0 md:pt-0"
         >
+          <div x-text="$store.answerStatus"></div>
+
           <!-- Scoreboard -->
           <div class="px-0">
             Score:
@@ -114,22 +123,23 @@
             <template x-for="(option, index) in $store.curQues.options">
               <div
                 class="option border-y px-4 py-2 hover:cursor-pointer hover:bg-neutral-50 md:rounded md:border-2 md:px-4 md:py-4"
-                :class="
-                  answered() && [$store.chosenOption, $store.curQues.answer].includes(option)
+                tabindex="0"
+                :class="answered() && [$store.chosenOption, $store.curQues.answer].includes(option)
                     ? ($store.curQues.answer === option
                         ? '!bg-green-100 !border-green-200 z-20'
                         : '!bg-red-100 !border-red-200 z-20')
                     : 'bg-white'
                   "
                 @click="answer(option)"
+                @keyup.enter="answer(option)"
               >
                 <span
-                  class="mr-2 select-none text-neutral-400"
+                  class="mr-2 inline text-neutral-400"
                   x-text="`${'ABCDE'.substring(index, index+1)}.` "
                 ></span>
                 <span
-                  class="option-text select-all transition-all"
-                  :class="$store.answerStatus === 'transitioning' ? 'opacity-0' : 'opacity-100'"
+                  class="option-text inline transition-all"
+                  :class="transitionOpacity()"
                   x-text="option"
                 ></span>
               </div>
@@ -146,12 +156,14 @@
             <div
               class="text-green-600"
               x-show="$store.answerStatus == 'correct'"
+              x-transition
             >
               Correct 😄
             </div>
             <div
               class="text-red-600"
               x-show="$store.answerStatus == 'incorrect'"
+              x-transition
             >
               Incorrect 🙁
             </div>

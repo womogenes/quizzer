@@ -36,7 +36,12 @@ document.addEventListener('alpine:init', async () => {
     Alpine.store('curQues', questions[index]);
   };
 
+  let shouldMove = false;
+
   window.answer = (option) => {
+    shouldMove = true;
+
+    if (Alpine.store('answerStatus').endsWith('correct')) return;
     const isCorrect = option === Alpine.store('curQues').answer;
     Alpine.store('answerStatus', isCorrect ? 'correct' : 'incorrect');
     Alpine.store('answerHistory', [
@@ -47,11 +52,18 @@ document.addEventListener('alpine:init', async () => {
     $$('.option').forEach((el) => el.classList.toggle('transition-all'));
     $('#options-grid').style.pointerEvents = 'none';
     $('#options-grid').style.opacity = 0.8;
+
+    shouldMove = false;
   };
 
   window.nextQuestion = () => {
     // Disallow moving on if not in the correct state
     if (!Alpine.store('answerStatus').endsWith('correct')) return;
+
+    // Are we done?
+    if (Alpine.store('curIdx') === questions.length - 1) {
+      console.log('user finished');
+    }
 
     // Hide text first
     Alpine.store('answerStatus', 'transitioning');
@@ -68,10 +80,14 @@ document.addEventListener('alpine:init', async () => {
       // Prefetch next image too
       new Image().src =
         questions[(Alpine.store('curIdx') + 1) % questions.length].imageURL;
-    }, 500);
+    }, 0);
   };
 
-  window.addEventListener('keyup', nextQuestion);
+  window.addEventListener('keyup', (e) => {
+    console.log(shouldMove);
+    if (!shouldMove) return;
+    nextQuestion();
+  });
   window.addEventListener('mouseup', nextQuestion);
 
   loadQuestion(Alpine.store('curIdx'));

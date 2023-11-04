@@ -1,4 +1,5 @@
 const $ = document.querySelector.bind(document);
+const $$ = document.querySelectorAll.bind(document);
 
 const typograph = (str) => {
   const runReplacements = (content, replacements) => {
@@ -27,53 +28,51 @@ document.addEventListener('alpine:init', async () => {
   console.log('Alpine initialized.');
 
   console.log('Loading quiz questions...');
-  const questions = await fetchSpreadsheet('Questions');
+  window.questions = await fetchSpreadsheet('AAPI FIGURES');
   Alpine.store('questions', questions);
   Alpine.store('quizLoaded', true);
 
-  const loadQuestion = (questionArr) => {
-    const [imageURL, question, options, answer] = questionArr;
-
-    // Load the ith question
-    Alpine.store('curQues', {
-      imageURL,
-      question: typograph(question),
-      options,
-      answer: parseInt(answer),
-    });
+  const loadQuestion = (index) => {
+    Alpine.store('curQues', questions[index]);
   };
 
-  window.answer = (index) => {
-    const isCorrect = index === Alpine.store('curQues').answer;
+  window.answer = (option) => {
+    const isCorrect = option === Alpine.store('curQues').answer;
     Alpine.store('answerStatus', isCorrect ? 'correct' : 'incorrect');
     Alpine.store('answerHistory', [
       ...Alpine.store('answerHistory'),
       isCorrect,
     ]);
-    Alpine.store('chosenOption', index);
+    Alpine.store('chosenOption', option);
+    $$('.option').forEach((el) => el.classList.toggle('transition-all'));
     $('#options-grid').style.pointerEvents = 'none';
     $('#options-grid').style.opacity = 0.8;
-
-    // window.setTimeout(nextQuestion, 2000);
   };
 
   window.nextQuestion = () => {
-    $('#options-grid').style.pointerEvents = 'auto';
-    $('#options-grid').style.opacity = 1.0;
-    $('#image').src = '';
-    Alpine.store('answerStatus', 'answering');
-    Alpine.store('curIdx', (Alpine.store('curIdx') + 1) % questions.length);
-    loadQuestion(questions[Alpine.store('curIdx')]);
+    // Disallow moving on if not in the correct state
+    if (!Alpine.store('answerStatus').endsWith('correct')) return;
+
+    // Hide text first
+    Alpine.store('answerStatus', 'transitioning');
+
+    // Change question
+    window.setTimeout(() => {
+      $('#options-grid').style.pointerEvents = 'auto';
+      $('#options-grid').style.opacity = 1.0;
+      Alpine.store('curIdx', (Alpine.store('curIdx') + 1) % questions.length);
+
+      Alpine.store('answerStatus', 'answering');
+      loadQuestion(Alpine.store('curIdx'));
+
+      // Prefetch next image too
+      new Image().src =
+        questions[(Alpine.store('curIdx') + 1) % questions.length].imageURL;
+    }, 500);
   };
 
-  window.addEventListener('keyup', () => {
-    if (Alpine.store('answerStatus') === 'answering') return;
-    window.setTimeout(nextQuestion, 10);
-  });
-  window.addEventListener('touchend', () => {
-    if (Alpine.store('answerStatus') === 'answering') return;
-    nextQuestion();
-  });
+  window.addEventListener('keyup', nextQuestion);
+  window.addEventListener('mouseup', nextQuestion);
 
-  loadQuestion(questions[Alpine.store('curIdx')]);
+  loadQuestion(Alpine.store('curIdx'));
 });

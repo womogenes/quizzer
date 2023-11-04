@@ -18,6 +18,7 @@
 
     <!-- Our resources -->
     <link rel="stylesheet" href="css/style.css" />
+    <script src="js/utils.js" defer></script>
     <script src="js/quiz1.js" defer></script>
     <script src="js/index.js" defer></script>
 
@@ -65,7 +66,7 @@
           x-data
         >
           <img
-            class="h-24 w-full border-none bg-neutral-200 object-cover sm:block sm:h-96 md:rounded-lg"
+            class="h-24 bg-neutral-200 object-cover sm:aspect-video sm:h-auto md:rounded-lg"
             :src="$store.curQues.imageURL"
             id="image"
           />
@@ -83,7 +84,7 @@
             </div>
 
             <p
-              class="text-lg font-bold md:text-3xl"
+              class="text-lg font-bold md:text-2xl"
               x-text="$store.curQues.question"
             ></p>
           </div>
@@ -94,7 +95,7 @@
           class="flex w-full flex-col items-start gap-4 px-0 sm:p-0 sm:px-4 sm:pr-6 sm:pt-6 md:pr-0 md:pt-0"
         >
           <!-- Scoreboard -->
-          <div class="px-4">
+          <div class="px-0">
             Score:
             <span
               class="font-bold"
@@ -112,26 +113,31 @@
           >
             <template x-for="(option, index) in $store.curQues.options">
               <div
-                :class="`md:rounded border-y md:border-2 px-4 py-2 md:px-4 md:py-4 transition-all hover:cursor-pointer hover:bg-neutral-50 ${
-                  answered() && [$store.chosenOption, $store.curQues.answer].includes(index)
-                    ? ($store.curQues.answer === index
+                class="option border-y px-4 py-2 hover:cursor-pointer hover:bg-neutral-50 md:rounded md:border-2 md:px-4 md:py-4"
+                :class="
+                  answered() && [$store.chosenOption, $store.curQues.answer].includes(option)
+                    ? ($store.curQues.answer === option
                         ? '!bg-green-100 !border-green-200 z-20'
                         : '!bg-red-100 !border-red-200 z-20')
                     : 'bg-white'
-                  } }`"
-                @click="answer(index)"
+                  "
+                @click="answer(option)"
               >
                 <span
-                  class="mr-2 text-neutral-400"
-                  x-text="`${'ABCDE'.substring(index, index+1)}.`"
+                  class="mr-2 select-none text-neutral-400"
+                  x-text="`${'ABCDE'.substring(index, index+1)}.` "
                 ></span>
-                <span x-text="option"></span>
+                <span
+                  class="option-text select-all transition-all"
+                  :class="$store.answerStatus === 'transitioning' ? 'opacity-0' : 'opacity-100'"
+                  x-text="option"
+                ></span>
               </div>
             </template>
           </div>
 
           <div
-            class="flex flex-col gap-2 px-4 text-2xl font-bold"
+            class="flex flex-col gap-2 px-0 text-2xl font-bold"
             x-data
             x-cloak
             x-show="answered()"

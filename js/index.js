@@ -36,11 +36,7 @@ document.addEventListener('alpine:init', async () => {
     Alpine.store('curQues', questions[index]);
   };
 
-  let shouldMove = false;
-
   window.answer = (option) => {
-    shouldMove = true;
-
     if (Alpine.store('answerStatus').endsWith('correct')) return;
     const isCorrect = option === Alpine.store('curQues').answer;
     Alpine.store('answerStatus', isCorrect ? 'correct' : 'incorrect');
@@ -53,7 +49,8 @@ document.addEventListener('alpine:init', async () => {
     $('#options-grid').style.pointerEvents = 'none';
     $('#options-grid').style.opacity = 0.8;
 
-    shouldMove = false;
+    // Indicate that pressing entier is ok now
+    shouldMove = 1;
   };
 
   window.nextQuestion = () => {
@@ -63,6 +60,8 @@ document.addEventListener('alpine:init', async () => {
     // Are we done?
     if (Alpine.store('curIdx') === questions.length - 1) {
       console.log('user finished');
+      Alpine.store('quizComplete', true);
+      return;
     }
 
     // Hide text first
@@ -83,10 +82,20 @@ document.addEventListener('alpine:init', async () => {
     }, 0);
   };
 
+  // Variable to catch edge case of whether quesiton should advance on pressing "enter"
+  // Because if user presses "enter" while answer selected, this will trigger answer()
+  //   and then immediately nextQuestion() but we need to block it the first time
+  let shouldMove = 0;
+
   window.addEventListener('keyup', (e) => {
-    console.log(shouldMove);
-    if (!shouldMove) return;
+    console.log(e.key, shouldMove);
+    if (e.key === 'Enter' && shouldMove === 1) {
+      shouldMove = 2;
+      return;
+    }
+    if (shouldMove !== 2) return;
     nextQuestion();
+    shouldMove = 0;
   });
   window.addEventListener('mouseup', nextQuestion);
 

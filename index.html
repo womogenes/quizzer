@@ -90,7 +90,7 @@
         x-transition.opacity
       >
         <div
-          class="flex w-full max-w-sm flex-col items-start gap-6 rounded bg-white p-8 shadow-lg"
+          class="flex w-full max-w-sm flex-col items-start gap-6 rounded bg-white p-6 shadow-lg sm:p-8"
           x-data="{score: 0, quizLen: 0}"
           x-effect="
             score = $store.state.answerHistory.reduce((a, b) => a + b, 0);
@@ -125,7 +125,7 @@
             tabindex="0"
             class="cursor-pointer rounded border-2 bg-white px-4 py-2 transition-colors hover:bg-neutral-200"
           >
-            I want more quizzes 🥺
+            Play again 🎮
           </a>
         </div>
       </div>

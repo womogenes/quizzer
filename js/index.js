@@ -36,7 +36,7 @@ document.addEventListener('alpine:init', async () => {
 
   console.log('Loading quiz questions...');
   window.questions = await fetchSpreadsheet('AAPI FIGURES');
-  questions = shuffle(questions).slice(0, 1);
+  questions = shuffle(questions).slice(0, 10);
   state.questions = questions;
   state.quizLoaded = true;
 
@@ -74,7 +74,7 @@ document.addEventListener('alpine:init', async () => {
     }
 
     // Hide text first
-    state.answerStatus = transitioning;
+    state.answerStatus = 'transitioning';
 
     // Change question
     window.setTimeout(() => {

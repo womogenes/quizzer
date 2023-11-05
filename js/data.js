@@ -1,6 +1,8 @@
+import { typograph, shuffle } from './utils.js';
+
 const GAPI_KEY = 'AIzaSyAPWmkmeWMtLA-4wHtoP0i7Yc-kd4dPD3g';
 
-const fetchSpreadsheet = async (sheetName) => {
+export const fetchSpreadsheet = async (sheetName) => {
   let spreadsheetID = '1OkgNmZRkt4BtyH2_9BDyZt5ywdGUmu8obHlHYqXDVYU';
   let apiURL = `https://sheets.googleapis.com/v4/spreadsheets/${spreadsheetID}/values/${sheetName}?alt=json&key=${GAPI_KEY}`;
 

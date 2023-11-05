@@ -1,20 +1,8 @@
+import { shuffle } from './utils.js';
+import { fetchSpreadsheet } from './data.js';
+
 const $ = document.querySelector.bind(document);
 const $$ = document.querySelectorAll.bind(document);
-
-const typograph = (str) => {
-  const runReplacements = (content, replacements) => {
-    for (let [og, repl] of replacements) {
-      content = content.replace(og, repl);
-    }
-    return content;
-  };
-  const replacements = [
-    [/(?<=[a-zA-Z])"([,.])(?!\.)/g, (_, p1) => `${p1}"`], // Put periods, commas *inside* quotes
-    [/"([^"]+)?"/g, (_, p1) => `“${p1}”`],
-    [/'([^"]+)?'/g, (_, p1) => `‘${p1}’`],
-  ];
-  return runReplacements(str, replacements);
-};
 
 let state;
 
@@ -58,7 +46,6 @@ document.addEventListener('alpine:init', async () => {
 
     // Are we done?
     if (state.answerHistory.length === questions.length) {
-      console.log('user finished');
       state.quizComplete = true;
       return;
     }

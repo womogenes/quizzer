@@ -1,5 +1,5 @@
 // https://stackoverflow.com/questions/2450954/how-to-randomize-shuffle-a-javascript-array
-const shuffle = (array) => {
+export const shuffle = (array) => {
   let currentIndex = array.length,
     randomIndex;
   let copy = [...array];
@@ -18,4 +18,19 @@ const shuffle = (array) => {
   }
 
   return copy;
+};
+
+export const typograph = (str) => {
+  const runReplacements = (content, replacements) => {
+    for (let [og, repl] of replacements) {
+      content = content.replace(og, repl);
+    }
+    return content;
+  };
+  const replacements = [
+    [/(?<=[a-zA-Z])"([,.])(?!\.)/g, (_, p1) => `${p1}"`], // Put periods, commas *inside* quotes
+    [/"([^"]+)?"/g, (_, p1) => `“${p1}”`],
+    [/'([^"]+)?'/g, (_, p1) => `‘${p1}’`],
+  ];
+  return runReplacements(str, replacements);
 };

@@ -16,17 +16,19 @@ const typograph = (str) => {
   return runReplacements(str, replacements);
 };
 
-document.addEventListener('alpine:init', () => {
-  Alpine.store('curIdx', 0);
-  Alpine.store('curQues', {});
-  Alpine.store('chosenOption', -1);
-  Alpine.store('quizLoaded', false);
-  Alpine.store('answerHistory', []);
-  Alpine.store('answerStatus', 'answering');
+let state;
 
-  Alpine.store('endScreen', {
-    show: Alpine.$persist(false).as('endScreen'),
+document.addEventListener('alpine:init', () => {
+  Alpine.store('state', {
+    curIdx: 0,
+    curQues: {},
+    chosenOption: -1,
+    quizLoaded: false,
+    answerHistory: [],
+    answerStatus: 'answering',
+    showEndScreen: Alpine.$persist(false).as('endScreen'),
   });
+  state = Alpine.store('state');
 });
 
 document.addEventListener('alpine:init', async () => {
@@ -35,21 +37,18 @@ document.addEventListener('alpine:init', async () => {
   console.log('Loading quiz questions...');
   window.questions = await fetchSpreadsheet('AAPI FIGURES');
   questions = shuffle(questions).slice(0, 1);
-  Alpine.store('questions', questions);
-  Alpine.store('quizLoaded', true);
+  state.questions = questions;
+  state.quizLoaded = true;
 
   window.answer = (option) => {
-    if (Alpine.store('answerStatus').endsWith('correct')) return;
-    if (Alpine.store('quizComplete')) return;
+    if (state.answerStatus.endsWith('correct')) return;
+    if (state.quizComplete) return;
 
-    const isCorrect = option === Alpine.store('curQues').answer;
-    Alpine.store('answerStatus', isCorrect ? 'correct' : 'incorrect');
-    Alpine.store('answerHistory', [
-      ...Alpine.store('answerHistory'),
-      isCorrect,
-    ]);
+    const isCorrect = option === state.curQues.answer;
+    state.answerStatus = isCorrect ? 'correct' : 'incorrect';
+    state.answerHistory = [...state.answerHistory, isCorrect];
 
-    Alpine.store('chosenOption', option);
+    state.chosenOption = option;
     $$('.option').forEach((el) => el.classList.toggle('transition-all'));
     $('#options-grid').style.pointerEvents = 'none';
     $('#options-grid').style.opacity = 0.8;
@@ -58,37 +57,37 @@ document.addEventListener('alpine:init', async () => {
     shouldMove = 1;
 
     // Are we done?
-    if (Alpine.store('answerHistory').length === questions.length) {
+    if (state.answerHistory.length === questions.length) {
       console.log('user finished');
-      Alpine.store('quizComplete', true);
+      state.quizComplete = true;
       return;
     }
   };
 
   window.nextQuestion = () => {
     // Disallow moving on if not in the correct state
-    if (!Alpine.store('answerStatus').endsWith('correct')) return;
-    if (Alpine.store('quizComplete')) {
+    if (!state.answerStatus.endsWith('correct')) return;
+    if (state.quizComplete) {
       // Show the screen?
-      Alpine.store('endScreen').show = true;
+      state.showEndScreen = true;
       return;
     }
 
     // Hide text first
-    Alpine.store('answerStatus', 'transitioning');
+    state.answerStatus = transitioning;
 
     // Change question
     window.setTimeout(() => {
       $('#options-grid').style.pointerEvents = 'auto';
       $('#options-grid').style.opacity = 1.0;
-      Alpine.store('curIdx', (Alpine.store('curIdx') + 1) % questions.length);
+      state.curIdx = (state.curIdx + 1) % questions.length;
 
-      Alpine.store('answerStatus', 'answering');
-      Alpine.store('curQues', questions[Alpine.store('curIdx')]);
+      state.answerStatus = 'answering';
+      state.curQues = questions[state.curIdx];
 
       // Prefetch next image too
       new Image().src =
-        questions[(Alpine.store('curIdx') + 1) % questions.length].imageURL;
+        questions[(state.curIdx + 1) % questions.length].imageURL;
     }, 500);
   };
 
@@ -109,5 +108,5 @@ document.addEventListener('alpine:init', async () => {
   });
   window.addEventListener('mouseup', nextQuestion);
 
-  Alpine.store('curQues', questions[Alpine.store('curIdx')]);
+  state.curQues = questions[state.curIdx];
 });

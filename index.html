@@ -56,23 +56,26 @@
       <!-- End screen to cover the whole page  -->
       <div
         class="absolute z-40 flex h-full w-full items-center justify-center bg-gray-900 bg-opacity-50"
-        x-data="$store.endScreen"
+        x-data
         x-cloak
-        x-show="$store.endScreen.show"
+        x-show="$store.state.showEndScreen"
         x-transition
       >
         <div
           class="flex flex-col rounded bg-white p-6"
-          x-data="{
-            score: $store.answerHistory.reduce((a, b) => a + b, 0),
-            quizLen: $store.answerHistory.length,
-          }"
+          x-data="{score: 0, quizLen: 0}"
+          x-effect="
+            score = $store.state.answerHistory.reduce((a, b) => a + b, 0);
+            quizLen = $store.state.answerHistory.length;"
         >
           <span>
             You got <span x-text="score"></span> out of
             <span x-text="quizLen"></span> questions.
           </span>
-          <btn @click="$store.endScreen.show = false" class="cursor-pointer">
+          <btn
+            @click="$store.state.showEndScreen = false"
+            class="cursor-pointer"
+          >
             Take me back
           </btn>
         </div>
@@ -81,11 +84,11 @@
       <!-- Main display content -->
       <div
         class="flex max-w-5xl flex-col items-start gap-4 sm:flex-row sm:gap-6 md:gap-12 md:p-12"
-        x-show="$store.quizLoaded"
+        x-show="$store.state.quizLoaded"
         x-cloak
         x-data="{
-          answered() { return $store.answerStatus.endsWith('correct'); },
-          transitionOpacity() { return `transition-opacity ${$store.answerStatus === 'transitioning' ? 'opacity-0 duration-50' : 'opacity-100 duration-600'}` }
+          answered() { return $store.state.answerStatus.endsWith('correct'); },
+          transitionOpacity() { return `transition-opacity ${$store.state.answerStatus === 'transitioning' ? 'opacity-0 duration-50' : 'opacity-100 duration-600'}` }
         }"
       >
         <!-- Left column -->
@@ -103,7 +106,7 @@
             <img
               class="absolute h-full w-full object-cover"
               :class="transitionOpacity()"
-              :src="$store.curQues.imageURL"
+              :src="$store.state.curQues.imageURL"
               id="image"
             />
           </div>
@@ -111,14 +114,18 @@
           <div class="flex flex-col gap-4 px-4 pt-4 sm:px-6 sm:py-6 md:px-0">
             <span>
               Question
-              <span class="font-bold" x-text="$store.curIdx + 1"></span> of
-              <span class="font-bold" x-text="$store.questions?.length"></span>
+              <span class="font-bold" x-text="$store.state.curIdx + 1"></span>
+              of
+              <span
+                class="font-bold"
+                x-text="$store.state.questions?.length"
+              ></span>
             </span>
 
             <p
               class="text-lg font-bold md:text-2xl"
               :class="transitionOpacity()"
-              x-text="$store.curQues.question"
+              x-text="$store.state.curQues.question"
             ></p>
           </div>
         </div>
@@ -132,10 +139,13 @@
             Score:
             <span
               class="font-bold"
-              x-text="$store.answerHistory.reduce((a, b) => a + b, 0)"
+              x-text="$store.state.answerHistory.reduce((a, b) => a + b, 0)"
             ></span>
             /
-            <span class="font-bold" x-text="$store.answerHistory.length"></span>
+            <span
+              class="font-bold"
+              x-text="$store.state.answerHistory.length"
+            ></span>
           </div>
 
           <!-- Options grid -->
@@ -144,12 +154,12 @@
             id="options-grid"
             x-data
           >
-            <template x-for="(option, index) in $store.curQues.options">
+            <template x-for="(option, index) in $store.state.curQues.options">
               <div
                 class="option relative border-y px-4 py-2 hover:cursor-pointer hover:bg-neutral-50 focus:z-30 md:rounded md:border-2 md:px-4 md:py-4"
                 tabindex="0"
-                :class="answered() && [$store.chosenOption, $store.curQues.answer].includes(option)
-                    ? ($store.curQues.answer === option
+                :class="answered() && [$store.state.chosenOption, $store.state.curQues.answer].includes(option)
+                    ? ($store.state.curQues.answer === option
                         ? '!bg-green-100 !border-green-200 z-20'
                         : 'shake !bg-red-100 !border-red-200 z-20')
                     : 'bg-white'
@@ -179,14 +189,14 @@
           >
             <div
               class="text-green-600"
-              x-show="$store.answerStatus == 'correct'"
+              x-show="$store.state.answerStatus == 'correct'"
               x-transition
             >
               Correct 😄
             </div>
             <div
               class="text-red-600"
-              x-show="$store.answerStatus == 'incorrect'"
+              x-show="$store.state.answerStatus == 'incorrect'"
               x-transition
             >
               Incorrect 🙁

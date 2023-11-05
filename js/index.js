@@ -29,6 +29,8 @@ document.addEventListener('alpine:init', async () => {
   state.quizLoaded = true;
 
   window.answer = (option) => {
+    $('.option').focus();
+    document.activeElement.blur();
     if (state.answerStatus.endsWith('correct')) return;
     if (state.quizComplete) return;
 
@@ -73,8 +75,8 @@ document.addEventListener('alpine:init', async () => {
       state.curQues = questions[state.curIdx];
 
       // Prefetch next image too
-      new Image().src =
-        questions[(state.curIdx + 1) % questions.length].imageURL;
+      if (state.curIdx < state.questions.length - 1)
+        new Image().src = questions[state.curIdx + 1].imageURL;
     }, 500);
   };
 
@@ -84,9 +86,22 @@ document.addEventListener('alpine:init', async () => {
   let shouldMove = 0;
 
   window.addEventListener('keyup', (e) => {
-    if (e.key === 'Enter' && shouldMove === 1) {
-      shouldMove = 2;
+    if (
+      state.answerStatus === 'answering' &&
+      'abcde'.includes(e.key.toLowerCase())
+    ) {
+      answer(
+        state.questions[state.curIdx].options[
+          'abcde'.indexOf(e.key.toLowerCase())
+        ],
+      );
       return;
+    }
+
+    // Next question?
+    if (shouldMove === 1) {
+      shouldMove = 2;
+      if (e.key === 'Enter') return;
     }
     if (shouldMove !== 2) return;
     nextQuestion();

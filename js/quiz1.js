@@ -6,20 +6,17 @@ const fetchSpreadsheet = async (sheetName) => {
 
   // Map each row of the spreadsheet to the format we want
   const questions = await (await fetch(apiURL)).json();
-  return questions.values
-    .slice(1)
-    .map((row) => {
-      const answer = row[6];
-      const question = row[0];
-      const options = row.slice(1, 6).map((op) => op.trim());
-      const imageURL = row[7];
+  return questions.values.slice(1).map((row) => {
+    const answer = row[6];
+    const question = row[0];
+    const options = row.slice(1, 6).map((op) => op.trim());
+    const imageURL = row[7];
 
-      return {
-        imageURL,
-        question: typograph(question),
-        options: shuffle(options),
-        answer: options['ABCDE'.indexOf(answer)],
-      };
-    })
-    .slice(0, 10);
+    return {
+      imageURL,
+      question: typograph(question),
+      options: shuffle(options),
+      answer: options['ABCDE'.indexOf(answer)],
+    };
+  });
 };

@@ -49,6 +49,30 @@
 
     <!-- Icons -->
     <link href="https://cdn.lineicons.com/4.0/lineicons.css" rel="stylesheet" />
+
+    <!-- We love twemoji -->
+    <script
+      src="https://unpkg.com/twemoji@latest/dist/twemoji.min.js"
+      crossorigin="anonymous"
+    ></script>
+    <script defer>
+      window.onload = () => {
+        console.log(document.body);
+        twemoji.parse(document.body, {
+          folder: 'svg',
+          ext: '.svg',
+        });
+      };
+    </script>
+    <style>
+      img.emoji {
+        display: inline;
+        height: 1em;
+        width: 1em;
+        margin: 0em 0.05em 0 0.1em;
+        vertical-align: -0.1em;
+      }
+    </style>
   </head>
 
   <body class="flex h-full flex-col items-center">
@@ -65,8 +89,9 @@
           class="flex flex-col rounded bg-white p-6"
           x-data="{score: 0, quizLen: 0}"
           x-effect="
-            score = $store.state.answerHistory.reduce((a, b) => a + b, 0);
-            quizLen = $store.state.answerHistory.length;"
+            score = 8; // $store.state.answerHistory.reduce((a, b) => a + b, 0);
+            quizLen = 10; // $store.state.answerHistory.length;
+          "
         >
           <span>
             You got <span x-text="score"></span> out of

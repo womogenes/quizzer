@@ -97,7 +97,6 @@ document.addEventListener('alpine:init', async () => {
   let shouldMove = 0;
 
   window.addEventListener('keyup', (e) => {
-    console.log(e.key, shouldMove);
     if (e.key === 'Enter' && shouldMove === 1) {
       shouldMove = 2;
       return;

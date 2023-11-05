@@ -26,7 +26,7 @@ document.addEventListener('alpine:init', () => {
     quizLoaded: false,
     answerHistory: [],
     answerStatus: 'answering',
-    showEndScreen: Alpine.$persist(false).as('endScreen'),
+    showEndScreen: false,
   });
   state = Alpine.store('state');
 });

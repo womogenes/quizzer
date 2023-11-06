@@ -1,9 +1,25 @@
 import { typograph, shuffle } from './utils.js';
 
 const GAPI_KEY = 'AIzaSyAPWmkmeWMtLA-4wHtoP0i7Yc-kd4dPD3g';
+let spreadsheetID = '1OkgNmZRkt4BtyH2_9BDyZt5ywdGUmu8obHlHYqXDVYU';
 
-export const fetchSpreadsheet = async (sheetName) => {
-  let spreadsheetID = '1OkgNmZRkt4BtyH2_9BDyZt5ywdGUmu8obHlHYqXDVYU';
+// References:
+// https://developers.google.com/sheets/api/reference/rest/v4/spreadsheets/get
+// https://developers.google.com/sheets/api/reference/rest/v4/spreadsheets#Spreadsheet
+export const fetchSheetList = async (spreadsheetID) => {
+  let apiURL = `https://sheets.googleapis.com/v4/spreadsheets/${spreadsheetID}?alt=json&key=${GAPI_KEY}`;
+  const res = await (await fetch(apiURL)).json();
+
+  return Promise.all(
+    res.sheets.map(async (sheet) => {
+      let apiURL = `https://sheets.googleapis.com/v4/spreadsheets/${spreadsheetID}/values/${sheet.properties.title}!A2:H2?alt=json&key=${GAPI_KEY}`;
+      let row = await (await fetch(apiURL)).json();
+      return { name: sheet.properties.title, image: row.values?.[0][7] };
+    }),
+  );
+};
+
+export const fetchSpreadsheet = async (spreadsheetID, sheetName) => {
   let apiURL = `https://sheets.googleapis.com/v4/spreadsheets/${spreadsheetID}/values/${sheetName}?alt=json&key=${GAPI_KEY}`;
 
   // Map each row of the spreadsheet to the format we want

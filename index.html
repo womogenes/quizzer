@@ -3,8 +3,56 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <title>LAPS Trivia</title>
+    <link rel="icon" href="/assets/favicon.svg" />
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="/css/style.css" />
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Scripts -->
+    <script src="/js/index.js" type="module" defer></script>
+    <script
+      defer
+      src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"
+    ></script>
   </head>
 
-  <body></body>
+  <body>
+    <main class="w-full">
+      <div
+        class="flex w-full justify-center bg-[#b43737] p-12 py-24 text-white"
+      >
+        <div class="flex w-full max-w-md flex-col items-start gap-2">
+          <h1 class="font-serif text-6xl">TRIVIA TIME</h1>
+          <p>Fall festival 2023 edition</p>
+        </div>
+      </div>
+
+      <div class="relative w-full -translate-y-[50%]">
+        <div>
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 40">
+            <path
+              d="M2000,17.26a2.6,2.6,0,0,1-.4.49C1970.2,16.56,1970.41,5,1941,5s-29.42,12.75-58.84,12.75S1852.73,5,1823.31,5s-29.42,12.75-58.83,12.75S1735.06,5,1705.64,5s-29.41,12.75-58.83,12.75S1617.39,5,1588,5s-29.41,12.75-58.83,12.75S1499.72,5,1470.3,5s-29.41,12.75-58.83,12.75S1382.05,5,1352.64,5s-29.42,12.75-58.83,12.75S1264.39,5,1235,5s-29.42,12.75-58.83,12.75S1146.73,5,1117.32,5s-29.42,12.75-58.83,12.75S1029.07,5,999.66,5s-29.42,12.75-58.84,12.75S911.41,5,882,5s-29.41,12.75-58.83,12.75S793.74,5,764.33,5,734.91,17.75,705.5,17.75,676.08,5,646.67,5s-29.42,12.75-58.84,12.75S558.42,5,529,5s-29.41,12.75-58.83,12.75S440.76,5,411.34,5s-29.41,12.75-58.83,12.75S323.1,5,293.68,5s-29.42,12.75-58.83,12.75S205.43,5,176,5,146.6,17.75,117.19,17.75,87.77,5,58.36,5C29.11,5,28.93,17.61,0,17.74V50H2000Z"
+              transform="translate(0 0)"
+              fill="white"
+            ></path>
+          </svg>
+        </div>
+      </div>
+
+      <!-- Fetch quizzes -->
+      <div class="px-12">
+        <div x-data>Hello</div>
+        <p>Take the quiz here: <a href="/quiz">/quiz</a></p>
+      </div>
+    </main>
+  </body>
 </html>

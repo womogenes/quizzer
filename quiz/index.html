@@ -18,7 +18,7 @@
 
     <!-- Our resources -->
     <link rel="stylesheet" href="/css/style.css" />
-    <script src="/js/index.js" type="module" defer></script>
+    <script src="/js/quiz.js" type="module" defer></script>
 
     <!-- Apline JS -->
     <script src="https://cdn.jsdelivr.net/npm/@alpinejs/persist@3.x.x/dist/cdn.min.js"></script>
@@ -49,27 +49,6 @@
     <link href="https://cdn.lineicons.com/4.0/lineicons.css" rel="stylesheet" />
 
     <!-- We love twemoji -->
-    <script
-      src="https://unpkg.com/twemoji@latest/dist/twemoji.min.js"
-      crossorigin="anonymous"
-    ></script>
-    <script defer>
-      window.onload = () => {
-        twemoji.parse(document.body, {
-          folder: 'svg',
-          ext: '.svg',
-        });
-      };
-    </script>
-    <style>
-      img.emoji {
-        display: inline;
-        height: 1.2em;
-        width: 1.2em;
-        margin: 0 0.05em 0 0.1em;
-        vertical-align: -0.25em;
-      }
-    </style>
   </head>
 
   <body>
@@ -109,15 +88,25 @@
         />
       </svg>
       <div
-        class="max-w-sm"
+        class="flex max-w-sm flex-col items-start gap-2"
         x-cloak
         x-show="$store.state.questions?.length === 0"
         x-transition
       >
         <p>
-          Some error occured. ☹️ Please check that the source spreadsheet is
+          An error occured. ☹️ Please check that the source spreadsheet is
           publicly accessible and has questions in it.
         </p>
+        <div class="flex flex-col gap-1">
+          <p>
+            Spreadsheet ID:
+            <code x-text="`${$store.state.quizParams.spreadsheetID}`"></code>
+          </p>
+          <p>
+            Sheet name:
+            <code x-text="`${$store.state.quizParams.sheetName}`"></code>
+          </p>
+        </div>
         <br />
         <a href="/">Go back</a>
       </div>
@@ -180,7 +169,7 @@
       <!-- Main display content -->
       <div
         class="flex w-full max-w-5xl flex-col items-start gap-4 sm:flex-row sm:gap-6 md:gap-12 md:p-12"
-        x-show="$store.state.quizLoaded && $store.state.questions.length > 0"
+        x-show="$store.state.quizLoaded && $store.state.questions?.length > 0"
         x-cloak
         x-data="{
           answered() { return $store.state.answerStatus.endsWith('correct'); },

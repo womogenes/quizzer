@@ -14,15 +14,21 @@
   h5 {
     @apply font-bold;
   }
-
   h1 {
     @apply text-3xl;
+    @apply tracking-tight;
   }
   h2 {
     @apply text-xl;
   }
   kbd {
     @apply rounded border border-neutral-300 bg-neutral-50 p-1;
+  }
+  a {
+    @apply text-blue-600 hover:underline;
+  }
+  code {
+    @apply rounded bg-neutral-100 px-2 py-1 text-sm;
   }
 
   .btn {

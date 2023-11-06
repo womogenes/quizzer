@@ -20,15 +20,19 @@
     <!-- Scripts -->
     <script src="/js/index.js" type="module" defer></script>
     <script
+      src="https://cdn.jsdelivr.net/npm/@alpinejs/persist@3.x.x/dist/cdn.min.js"
+      defer
+    ></script>
+    <script
       defer
       src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"
     ></script>
   </head>
 
   <body>
-    <main class="w-full">
+    <main class="flex w-full flex-col items-center overflow-clip">
       <div
-        class="flex w-full justify-center bg-[#b43737] p-12 py-24 text-white"
+        class="flex w-full justify-center bg-[#b43737] p-12 py-12 text-white"
       >
         <div class="flex w-full max-w-md flex-col items-start gap-2">
           <h1 class="font-serif text-6xl">TRIVIA TIME</h1>
@@ -49,9 +53,33 @@
       </div>
 
       <!-- Fetch quizzes -->
-      <div class="px-12">
-        <div x-data>Hello</div>
-        <p>Take the quiz here: <a href="/quiz">/quiz</a></p>
+      <div
+        class="scroll relative flex w-full max-w-max justify-center gap-12 overflow-auto px-12 py-12"
+        x-data
+        x-show="$store.quizzes.length > 0"
+        x-transition
+      >
+        <template x-data x-for="(quiz, i) in $store.quizzes">
+          <div
+            class="m-auto flex flex-none scale-100 flex-col items-center gap-4 transition-all hover:scale-105"
+          >
+            <!-- Image -->
+            <div class="relative h-48 w-48 overflow-hidden rounded-full">
+              <div
+                class="absolute h-full w-full rounded-md p-2"
+                :style="`background: linear-gradient(to right, hsl(${i*80}, 60%, 60%), hsl(${i*80+30}, 60%, 60%));`"
+              >
+                <img
+                  class="relative z-20 h-full rounded-full object-cover"
+                  :src="`${quiz.imageURL}`"
+                />
+              </div>
+            </div>
+
+            <!-- Quiz name -->
+            <p x-text="quiz.name" class="font-serif text-xl"></p>
+          </div>
+        </template>
       </div>
     </main>
   </body>

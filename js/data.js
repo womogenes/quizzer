@@ -14,7 +14,12 @@ export const fetchSheetList = async (spreadsheetID) => {
     res.sheets.map(async (sheet) => {
       let apiURL = `https://sheets.googleapis.com/v4/spreadsheets/${spreadsheetID}/values/${sheet.properties.title}!A2:H2?alt=json&key=${GAPI_KEY}`;
       let row = await (await fetch(apiURL)).json();
-      return { name: sheet.properties.title, image: row.values?.[0][7] };
+      return {
+        sheetName: sheet.properties.title,
+        name: sheet.properties.title,
+        spreadsheetID,
+        imageURL: row.values?.[0][7],
+      };
     }),
   );
 };

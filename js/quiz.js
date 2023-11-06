@@ -84,6 +84,7 @@ document.addEventListener('alpine:init', async () => {
 
     // Change question
     window.setTimeout(() => {
+      $('#image').src = '';
       $('#options-grid').style.pointerEvents = 'auto';
       $('#options-grid').style.opacity = 1.0;
       state.curIdx = (state.curIdx + 1) % questions.length;

@@ -9,7 +9,6 @@ window.addEventListener('alpine:init', async () => {
 
   let spreadsheetID = '1OkgNmZRkt4BtyH2_9BDyZt5ywdGUmu8obHlHYqXDVYU';
   let quizList = await fetchSheetList(spreadsheetID);
-  console.log(quizList);
 
   // Some caching system can probably be cooked up later
   Alpine.store('quizzes', quizList);

@@ -25,26 +25,34 @@ document.addEventListener('alpine:init', () => {
   state = Alpine.store('state');
 });
 
+const waitUntilTime = (callback, time) => {
+  // Wait until `time` seconds after page load to run `callback`
+  window.setTimeout(
+    callback,
+    Math.max(0, time * 1000 - (new Date() - pageLoadTimestamp)),
+  );
+};
+
+let pageLoadTimestamp = new Date();
+
 document.addEventListener('alpine:init', async () => {
   console.log('Alpine initialized.');
 
-  console.log('Loading quiz questions...');
   try {
     window.questions = await fetchSpreadsheet(
       quizParams.spreadsheetID,
       quizParams.sheetName,
     );
     questions = shuffle(questions).slice(0, 10);
-    state.questions = questions;
-    state.quizLoaded = true;
+    waitUntilTime(() => {
+      state.questions = questions;
+      state.quizLoaded = true;
+    }, 2);
   } catch {
-    console.log('whoopsies!');
-    state.quizLoaded = true;
     state.questions = [];
     state.quizLoaded = true;
+    return;
   }
-  if (state.questions.length === 0) return;
-
   window.answer = (option) => {
     $('.option').focus();
     document.activeElement.blur();

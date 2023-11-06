@@ -2,7 +2,7 @@
   "scripts": {
     "dev": "run-p dev:*",
     "dev:css": "tailwindcss -i ./css/input.css -o ./css/style.css --watch --quiet",
-    "dev:serve": "browser-sync start --no-notify --no-open --server --files '**/*.{html,css,js}'",
+    "dev:serve": "browser-sync start --server --files \"**/*.{html,css,js}\" \"index.html\"",
     "build": "tailwindcss -i ./css/input.css -o ./css/style.css --minify"
   },
   "devDependencies": {

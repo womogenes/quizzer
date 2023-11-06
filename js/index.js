@@ -8,10 +8,11 @@ let state;
 
 document.addEventListener('alpine:init', () => {
   Alpine.store('state', {
+    questions: null,
+    quizLoaded: false,
     curIdx: 0,
     curQues: {},
     chosenOption: -1,
-    quizLoaded: false,
     answerHistory: [],
     answerStatus: 'answering',
     showEndScreen: false,
@@ -23,10 +24,11 @@ document.addEventListener('alpine:init', async () => {
   console.log('Alpine initialized.');
 
   console.log('Loading quiz questions...');
-  window.questions = await fetchSpreadsheet('AAPI FIGURES');
+  window.questions = await fetchSpreadsheet('FOOD');
   questions = shuffle(questions).slice(0, 10);
   state.questions = questions;
   state.quizLoaded = true;
+  if (questions.length === 0) return;
 
   window.answer = (option) => {
     $('.option').focus();

@@ -25,6 +25,7 @@ export const fetchSheetList = async (spreadsheetID) => {
 };
 
 export const fetchSpreadsheet = async (spreadsheetID, sheetName) => {
+  console.log(spreadsheetID, sheetName);
   let apiURL = `https://sheets.googleapis.com/v4/spreadsheets/${spreadsheetID}/values/${sheetName}?alt=json&key=${GAPI_KEY}`;
 
   // Map each row of the spreadsheet to the format we want

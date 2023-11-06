@@ -162,136 +162,150 @@
           <a
             href="/"
             tabindex="0"
-            class="cursor-pointer rounded border-2 bg-white px-4 py-2 transition-colors hover:bg-neutral-200"
+            class="cursor-pointer rounded border-2 bg-white px-4 py-2 text-black !no-underline transition-colors hover:bg-neutral-200"
           >
-            Play again 🎮
+            Try more quizzes 🤔
           </a>
         </div>
       </div>
 
       <!-- Main display content -->
-      <div
-        class="flex w-full max-w-5xl flex-col items-start gap-4 sm:flex-row sm:gap-6 md:gap-12 md:p-12"
-        x-show="$store.state.quizLoaded && $store.state.questions?.length > 0"
-        x-cloak
-        x-data="{
+      <div class="md:p-12">
+        <div class="fpx-4 pb-4 pt-4 md:px-0 md:pt-0">
+          <a
+            class="flex items-center justify-start gap-2 font-serif font-bold text-black"
+            href="/"
+          >
+            <img class="inline h-4" src="/assets/favicon.svg" />
+            LAPS</a
+          >
+        </div>
+
+        <div
+          class="flex w-full max-w-5xl flex-col items-start gap-4 sm:flex-row sm:gap-6 md:gap-12"
+          x-show="$store.state.quizLoaded && $store.state.questions?.length > 0"
+          x-cloak
+          x-data="{
           answered() { return $store.state.answerStatus.endsWith('correct'); },
           transitionOpacity() { return `transition-opacity ${$store.state.answerStatus === 'transitioning' ? 'opacity-0 duration-50' : 'opacity-100 duration-600'}` }
         }"
-      >
-        <!-- Left column -->
-        <div
-          class="flex w-full flex-col sm:flex-col-reverse md:flex-col"
-          x-data
         >
-          <!-- Image -->
+          <!-- Left column -->
           <div
-            class="relative h-24 overflow-hidden sm:aspect-video sm:h-auto md:rounded-lg"
-          >
-            <div
-              class="absolute h-full w-full animate-pulse bg-neutral-200"
-            ></div>
-            <img
-              class="absolute h-full w-full object-cover"
-              :class="transitionOpacity()"
-              :src="$store.state.curQues?.imageURL"
-              id="image"
-              :alt="` Image for question ${$store.state.curIdx + 1}`"
-            />
-          </div>
-
-          <div class="flex flex-col gap-4 px-4 pt-4 sm:px-6 sm:py-6 md:px-0">
-            <span>
-              Question
-              <span class="font-bold" x-text="$store.state.curIdx + 1"></span>
-              of
-              <span
-                class="font-bold"
-                x-text="$store.state.questions?.length"
-              ></span>
-            </span>
-
-            <p
-              class="text-lg font-bold md:text-2xl"
-              :class="transitionOpacity()"
-              x-text="$store.state.curQues?.question"
-            ></p>
-          </div>
-        </div>
-
-        <!-- Right column -->
-        <div
-          class="flex w-full select-none flex-col items-start gap-4 px-4 sm:pl-0 sm:pr-6 sm:pt-6 md:p-0"
-        >
-          <!-- Scoreboard -->
-          <div class="px-0">
-            Score:
-            <span
-              class="font-bold"
-              x-text="$store.state.answerHistory.reduce((a, b) => a + b, 0)"
-            ></span>
-            /
-            <span
-              class="font-bold"
-              x-text="$store.state.answerHistory.length"
-            ></span>
-          </div>
-
-          <!-- Options grid -->
-          <div
-            class="grid w-full grid-cols-1 gap-0 border-y md:gap-4 md:border-none"
-            id="options-grid"
+            class="flex w-full flex-col sm:flex-col-reverse md:flex-col"
             x-data
           >
-            <template x-for="(option, index) in $store.state.curQues?.options">
+            <!-- Image -->
+            <div
+              class="relative h-24 overflow-hidden sm:aspect-video sm:h-auto md:rounded-lg"
+            >
               <div
-                class="option relative border-y px-4 py-2 hover:cursor-pointer hover:bg-neutral-50 focus:z-30 md:rounded md:border-2 md:px-4 md:py-4"
-                :tabindex="!$store.state.quizComplete && 0"
-                :class="answered() && [$store.state.chosenOption, $store.state.curQues.answer].includes(option)
+                class="absolute h-full w-full animate-pulse bg-neutral-200"
+              ></div>
+              <img
+                class="absolute h-full w-full object-cover"
+                :class="transitionOpacity()"
+                :src="$store.state.curQues?.imageURL"
+                id="image"
+                :alt="` Image for question ${$store.state.curIdx + 1}`"
+              />
+            </div>
+
+            <div class="flex flex-col gap-4 px-4 pt-4 sm:px-6 sm:py-6 md:px-0">
+              <span>
+                Question
+                <span class="font-bold" x-text="$store.state.curIdx + 1"></span>
+                of
+                <span
+                  class="font-bold"
+                  x-text="$store.state.questions?.length"
+                ></span>
+              </span>
+
+              <p
+                class="text-lg font-bold md:text-2xl"
+                :class="transitionOpacity()"
+                x-text="$store.state.curQues?.question"
+              ></p>
+            </div>
+          </div>
+
+          <!-- Right column -->
+          <div
+            class="flex w-full select-none flex-col items-start gap-4 px-4 sm:pl-0 sm:pr-6 sm:pt-6 md:p-0"
+          >
+            <!-- Scoreboard -->
+            <div class="px-0">
+              Score:
+              <span
+                class="font-bold"
+                x-text="$store.state.answerHistory.reduce((a, b) => a + b, 0)"
+              ></span>
+              /
+              <span
+                class="font-bold"
+                x-text="$store.state.answerHistory.length"
+              ></span>
+            </div>
+
+            <!-- Options grid -->
+            <div
+              class="grid w-full grid-cols-1 gap-0 border-y md:gap-4 md:border-none"
+              id="options-grid"
+              x-data
+            >
+              <template
+                x-for="(option, index) in $store.state.curQues?.options"
+              >
+                <div
+                  class="option relative border-y px-4 py-2 hover:cursor-pointer hover:bg-neutral-50 focus:z-30 md:rounded md:border-2 md:px-4 md:py-4"
+                  :tabindex="!$store.state.quizComplete && 0"
+                  :class="answered() && [$store.state.chosenOption, $store.state.curQues.answer].includes(option)
                     ? ($store.state.curQues.answer === option
                         ? '!bg-green-100 !border-green-200 z-20'
                         : 'shake !bg-red-100 !border-red-200 z-20')
                     : 'bg-white'
                   "
-                @click="answer(option)"
-                @keyup.enter="answer(option)"
-              >
-                <span
-                  class="mr-2 inline text-neutral-400"
-                  x-text="`${'ABCDE'.substring(index, index+1)}.` "
-                ></span>
-                <span
-                  class="option-text inline transition-all"
-                  :class="transitionOpacity()"
-                  x-text="option"
-                ></span>
-              </div>
-            </template>
-          </div>
+                  @click="answer(option)"
+                  @keyup.enter="answer(option)"
+                >
+                  <span
+                    class="mr-2 inline text-neutral-400"
+                    x-text="`${'ABCDE'.substring(index, index+1)}.` "
+                  ></span>
+                  <span
+                    class="option-text inline transition-all"
+                    :class="transitionOpacity()"
+                    x-text="option"
+                  ></span>
+                </div>
+              </template>
+            </div>
 
-          <div
-            class="flex flex-col gap-2 px-0 text-2xl font-bold"
-            x-data
-            x-cloak
-            x-show="answered()"
-            x-transition
-          >
             <div
-              class="text-green-600"
-              x-show="$store.state.answerStatus == 'correct'"
+              class="flex flex-col gap-2 px-0 text-2xl font-bold"
+              x-data
+              x-cloak
+              x-show="answered()"
               x-transition
             >
-              Correct 😄
-            </div>
-            <div
-              class="text-red-600"
-              x-show="$store.state.answerStatus == 'incorrect'"
-              x-transition
-            >
-              Incorrect 🙁
-            </div>
-            <div class="text-base font-normal text-neutral-600">
-              Press any key or tap to continue
+              <div
+                class="text-green-600"
+                x-show="$store.state.answerStatus == 'correct'"
+                x-transition
+              >
+                Correct 😄
+              </div>
+              <div
+                class="text-red-600"
+                x-show="$store.state.answerStatus == 'incorrect'"
+                x-transition
+              >
+                Incorrect 🙁
+              </div>
+              <div class="text-base font-normal text-neutral-600">
+                Press any key or tap to continue
+              </div>
             </div>
           </div>
         </div>

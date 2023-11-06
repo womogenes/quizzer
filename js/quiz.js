@@ -30,7 +30,10 @@ document.addEventListener('alpine:init', async () => {
 
   console.log('Loading quiz questions...');
   try {
-    window.questions = await fetchSpreadsheet('FOOD');
+    window.questions = await fetchSpreadsheet(
+      quizParams.spreadsheetID,
+      quizParams.sheetName,
+    );
     questions = shuffle(questions).slice(0, 10);
     state.questions = questions;
     state.quizLoaded = true;

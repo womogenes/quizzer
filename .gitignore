@@ -1,11 +1,7 @@
 node_modules/
 .vscode/
 
-data/historical_events/
-data/**.json
-data/**.zip
-
 **.env
 
 # Build artifacts
-# css/style.css
+css/style.css

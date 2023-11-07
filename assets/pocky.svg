@@ -1,0 +1,78 @@
+<svg width="383.54" height="464" version="1.1" viewBox="0 0 101.48 122.77" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <defs>
+    <clipPath id="clip0">
+      <rect x="1848" y="57" width="143" height="2361" />
+    </clipPath>
+    <linearGradient id="fill1" x1="1919.5" x2="1919.5" y1="57" y2="2045" gradientUnits="userSpaceOnUse" spreadMethod="reflect">
+      <stop stop-color="#6E5046" offset="0" />
+      <stop stop-color="#886256" offset=".41" />
+      <stop stop-color="#956B5E" offset=".7" />
+      <stop stop-color="#B49389" offset="1" />
+    </linearGradient>
+    <linearGradient id="fill2" x1="1919.5" x2="1919.5" y1="1862" y2="2418" gradientUnits="userSpaceOnUse" spreadMethod="reflect">
+      <stop stop-color="#DDC6AB" offset="0" />
+      <stop stop-color="#DDC7AC" offset=".035714" />
+      <stop stop-color="#DEC9AE" offset=".071429" />
+      <stop stop-color="#DECBB0" offset=".10714" />
+      <stop stop-color="#DFCDB2" offset=".14286" />
+      <stop stop-color="#DFCEB3" offset=".17857" />
+      <stop stop-color="#E0D0B5" offset=".21429" />
+      <stop stop-color="#E0D1B7" offset=".25" />
+      <stop stop-color="#E1D3B8" offset=".28571" />
+      <stop stop-color="#E1D4B9" offset=".32143" />
+      <stop stop-color="#E2D5BB" offset=".35714" />
+      <stop stop-color="#E2D7BC" offset=".39286" />
+      <stop stop-color="#E2D8BD" offset=".42857" />
+      <stop stop-color="#E3D9BF" offset=".46429" />
+      <stop stop-color="#E3DAC0" offset=".5" />
+      <stop stop-color="#E3DBC1" offset=".53571" />
+      <stop stop-color="#E4DCC2" offset=".57143" />
+      <stop stop-color="#E4DDC2" offset=".60714" />
+      <stop stop-color="#E4DDC3" offset=".64286" />
+      <stop stop-color="#E4DEC4" offset=".67857" />
+      <stop stop-color="#E5DFC5" offset=".71429" />
+      <stop stop-color="#E5DFC5" offset=".75" />
+      <stop stop-color="#E5E0C6" offset=".78571" />
+      <stop stop-color="#E5E0C6" offset=".82143" />
+      <stop stop-color="#E5E1C7" offset=".85714" />
+      <stop stop-color="#E5E1C7" offset=".89286" />
+      <stop stop-color="#E5E1C7" offset=".92857" />
+      <stop stop-color="#E5E1C7" offset=".96429" />
+      <stop stop-color="#E6E2C8" offset="1" />
+    </linearGradient>
+    <linearGradient id="linearGradient10" x1="1919.5" x2="1919.5" y1="57" y2="2045" gradientUnits="userSpaceOnUse" spreadMethod="reflect" xlink:href="#fill1" />
+    <linearGradient id="linearGradient11" x1="1919.5" x2="1919.5" y1="1862" y2="2418" gradientUnits="userSpaceOnUse" spreadMethod="reflect" xlink:href="#fill2" />
+  </defs>
+  <g transform="translate(-27.719 -23.598)">
+    <path transform="matrix(1.5371 0 0 1.5371 29.1 11.838)" d="m32.11 21.929c2.4351 1e-6 4.9665 2.9023 7.3309 3.4851 2.3644 0.58277 5.9546-0.81074 8.1108 0.32093 2.1562 1.1317 3.0488 4.878 4.8716 6.4928 1.8227 1.6148 5.6493 2.0494 7.0326 4.0534 1.3833 2.0041 0.43272 5.7361 1.2962 8.013 0.86352 2.2769 4.0498 4.44 4.3433 6.8574 0.29352 2.4174-2.2825 5.2802-2.5761 7.6975-0.29352 2.4174 1.5226 5.8135 0.65906 8.0904-0.86352 2.2769-4.4749 3.6146-5.8582 5.6187-1.3833 2.0041-1.3535 5.8551-3.1762 7.4699-1.8227 1.6148-5.6421 1.121-7.7983 2.2526-2.1562 1.1317-3.9195 4.5555-6.2838 5.1382-2.3644 0.58277-5.5168-1.6294-7.9519-1.6294s-5.5875 2.2122-7.9519 1.6294-4.1276-4.0066-6.2838-5.1382c-2.1562-1.1317-5.9756-0.63784-7.7983-2.2526-1.8227-1.6148-1.7929-5.4659-3.1762-7.4699-1.3833-2.0041-4.9947-3.3418-5.8582-5.6187-0.86352-2.2769 0.95259-5.673 0.65906-8.0904-0.29352-2.4174-2.8696-5.2802-2.5761-7.6975 0.29352-2.4174 3.4798-4.5805 4.3433-6.8574 0.86352-2.2769-0.087084-6.0089 1.2962-8.013 1.3833-2.0041 5.2099-2.4386 7.0326-4.0534 1.8227-1.6148 2.7154-5.3611 4.8716-6.4928 2.1562-1.1317 5.7464 0.26184 8.1108-0.32093s4.8958-3.4851 7.3309-3.4851z" fill="#eb5455" stroke-width=".26458" />
+    <g transform="matrix(-.040198 1.1046e-8 1.1046e-8 .040198 93.671 27.776)">
+      <g transform="translate(-1848,-57)" clip-path="url(#clip0)" fill-rule="evenodd">
+        <path d="m1919.5 57c39.49 0 71.5 32.012 71.5 71.5v1845c0 39.49-32.01 71.5-71.5 71.5s-71.5-32.01-71.5-71.5v-1845c0-39.489 32.01-71.5 71.5-71.5z" fill="url(#linearGradient10)" />
+        <path d="m1918.7 1862c9.32-0.43 17.57 13.9 29.61 20.37 12.05 6.47 22.8-48.8 42.67 18.46v448.53c0 37.9-32.01 68.63-71.5 68.63s-71.5-30.73-71.5-68.63v-448.53c25.85-61.81 32.67-9.38 44.45-15.85 11.79-6.47 16.96-22.55 26.27-22.98z" fill="url(#linearGradient11)" />
+        <path transform="matrix(0,-1,-1,0,1970,2136)" d="m0 55 24.758-55h35.242l-24.758 55z" fill="#d8c1a6" />
+        <path transform="matrix(0,-1,-1,0,1971,2198)" d="m0 55 24.758-55h35.242l-24.758 55z" fill="#d5bea3" />
+        <path transform="matrix(0,-1,-1,0,1971,2260)" d="m0 55 24.758-55h35.242l-24.758 55z" fill="#d2bba0" />
+        <path transform="matrix(0,-1,-1,0,1971,2322)" d="m0 55 24.758-55h35.242l-24.758 55z" fill="#cfb89d" />
+        <path transform="matrix(-.95392 -.30007 -.30007 .95392 2001.7 117.22)" d="m67.686 0c5.0061 0 9.8935 1.6666 14.614 4.8396l5.9368 6.0546-7.8323 4.6338c-32.901 23.547-60.948 72.439-79.831 136.75l-0.5739 2.433 0.87137-9.221c11.008-85.499 36.779-145.49 66.815-145.49z" fill="#fff" />
+      </g>
+    </g>
+    <g transform="matrix(-.038828 .010404 .010404 .038828 130.92 1.5128)" clip-path="url(#clip0)" fill-rule="evenodd">
+      <path d="m1919.5 57c39.49 0 71.5 32.012 71.5 71.5v1845c0 39.49-32.01 71.5-71.5 71.5s-71.5-32.01-71.5-71.5v-1845c0-39.489 32.01-71.5 71.5-71.5z" fill="url(#linearGradient10)" />
+      <path d="m1918.7 1862c9.32-0.43 17.57 13.9 29.61 20.37 12.05 6.47 22.8-48.8 42.67 18.46v448.53c0 37.9-32.01 68.63-71.5 68.63s-71.5-30.73-71.5-68.63v-448.53c25.85-61.81 32.67-9.38 44.45-15.85 11.79-6.47 16.96-22.55 26.27-22.98z" fill="url(#linearGradient11)" />
+      <path transform="matrix(0,-1,-1,0,1970,2136)" d="m0 55 24.758-55h35.242l-24.758 55z" fill="#d8c1a6" />
+      <path transform="matrix(0,-1,-1,0,1971,2198)" d="m0 55 24.758-55h35.242l-24.758 55z" fill="#d5bea3" />
+      <path transform="matrix(0,-1,-1,0,1971,2260)" d="m0 55 24.758-55h35.242l-24.758 55z" fill="#d2bba0" />
+      <path transform="matrix(0,-1,-1,0,1971,2322)" d="m0 55 24.758-55h35.242l-24.758 55z" fill="#cfb89d" />
+      <path transform="matrix(-.95392 -.30007 -.30007 .95392 2001.7 117.22)" d="m67.686 0c5.0061 0 9.8935 1.6666 14.614 4.8396l5.9368 6.0546-7.8323 4.6338c-32.901 23.547-60.948 72.439-79.831 136.75l-0.5739 2.433 0.87137-9.221c11.008-85.499 36.779-145.49 66.815-145.49z" fill="#fff" />
+    </g>
+    <g transform="matrix(-.034812 .020099 .020099 .034812 95.695 6.0026)" clip-path="url(#clip0)" fill-rule="evenodd">
+      <path d="m1919.5 57c39.49 0 71.5 32.012 71.5 71.5v1845c0 39.49-32.01 71.5-71.5 71.5s-71.5-32.01-71.5-71.5v-1845c0-39.489 32.01-71.5 71.5-71.5z" fill="url(#linearGradient10)" />
+      <path d="m1918.7 1862c9.32-0.43 17.57 13.9 29.61 20.37 12.05 6.47 22.8-48.8 42.67 18.46v448.53c0 37.9-32.01 68.63-71.5 68.63s-71.5-30.73-71.5-68.63v-448.53c25.85-61.81 32.67-9.38 44.45-15.85 11.79-6.47 16.96-22.55 26.27-22.98z" fill="url(#linearGradient11)" />
+      <path transform="matrix(0,-1,-1,0,1970,2136)" d="m0 55 24.758-55h35.242l-24.758 55z" fill="#d8c1a6" />
+      <path transform="matrix(0,-1,-1,0,1971,2198)" d="m0 55 24.758-55h35.242l-24.758 55z" fill="#d5bea3" />
+      <path transform="matrix(0,-1,-1,0,1971,2260)" d="m0 55 24.758-55h35.242l-24.758 55z" fill="#d2bba0" />
+      <path transform="matrix(0,-1,-1,0,1971,2322)" d="m0 55 24.758-55h35.242l-24.758 55z" fill="#cfb89d" />
+      <path transform="matrix(-.95392 -.30007 -.30007 .95392 2001.7 117.22)" d="m67.686 0c5.0061 0 9.8935 1.6666 14.614 4.8396l5.9368 6.0546-7.8323 4.6338c-32.901 23.547-60.948 72.439-79.831 136.75l-0.5739 2.433 0.87137-9.221c11.008-85.499 36.779-145.49 66.815-145.49z" fill="#fff" />
+    </g>
+  </g>
+</svg>

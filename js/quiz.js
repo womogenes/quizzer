@@ -43,7 +43,7 @@ document.addEventListener('alpine:init', async () => {
       quizParams.spreadsheetID,
       quizParams.sheetName,
     );
-    questions = shuffle(questions).slice(0, 10);
+    questions = shuffle(questions).slice(0, 1);
     waitUntilTime(() => {
       state.questions = questions;
       state.quizLoaded = true;

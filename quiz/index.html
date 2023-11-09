@@ -123,10 +123,10 @@
             <div class="text-3xl font-bold">
               <span x-show="score == 0" class="break-all">womp womp 😭</span>
               <span x-show="score == 1" class="break-all">Good effort 🥲</span>
-              <span x-show="score >= 2 && score < 5" class="break-all">
+              <span x-show="score >= 2 && score < 7" class="break-all">
                 Not bad 👏
               </span>
-              <span x-show="score >= 5" class="break-all"
+              <span x-show="score >= 7" class="break-all"
                 >Congratulations! 🥳</span
               >
             </div>
@@ -136,7 +136,7 @@
               <span x-text="quizLen" class="font-bold"></span> questions.
             </span>
 
-            <div x-show="score >= 5" class="flex flex-col gap-2">
+            <div x-show="score >= 7" class="flex flex-col gap-2">
               <span>Here's some Pocky as a prize!</span>
               <img class="w-48 self-center" src="/assets/pocky.svg" />
             </div>

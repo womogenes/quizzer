@@ -41,7 +41,7 @@
   <body>
     <main class="overflow-clip">
       <div
-        class="bg-roman-500 flex w-full justify-center p-12 py-12 text-white"
+        class="flex w-full justify-center bg-roman-500 p-12 py-12 text-white"
       >
         <div class="flex w-full max-w-md flex-col items-start gap-2">
           <h1 class="font-serif text-6xl">LAPS TRIVIA</h1>
@@ -62,14 +62,14 @@
 
       <!-- Fetch quizzes -->
       <div
-        class="grid grid-cols-2 justify-center gap-12 overflow-auto px-12 py-12"
+        class="grid grid-cols-2 justify-center gap-12 overflow-auto px-12 py-12 sm:grid-cols-4"
         x-data
         x-show="$store.quizzes.length > 0"
         x-transition
       >
         <template x-data x-for="(quiz, i) in $store.quizzes">
           <a
-            class="flex scale-100 flex-col items-center gap-4 text-black transition-all hover:scale-105 hover:no-underline"
+            class="flex scale-100 flex-col items-center gap-4 transition-all hover:scale-105"
             :href="`/quiz?spreadsheetID=${quiz.spreadsheetID}&sheetName=${quiz.sheetName}`"
           >
             <!-- Image -->
@@ -79,7 +79,7 @@
                 :style="`background: linear-gradient(to right, hsl(${i*80}, 60%, 60%), hsl(${i*80+30}, 60%, 60%));`"
               >
                 <div
-                  class="flex h-full w-full items-center justify-center rounded-full bg-white p-4"
+                  class="flex h-full w-full items-center justify-center rounded-full bg-white p-4 opacity-90"
                 >
                   <!-- Quiz name -->
                   <p

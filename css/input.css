@@ -24,9 +24,6 @@
   kbd {
     @apply rounded border border-neutral-300 bg-neutral-50 p-1;
   }
-  a {
-    @apply text-blue-600 hover:underline;
-  }
   pre,
   code {
     @apply rounded bg-neutral-100 px-2 py-1 text-sm;

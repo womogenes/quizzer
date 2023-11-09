@@ -56,10 +56,10 @@
   <body>
     <!-- Loading spinner -->
     <div
-      class="bg-roman-500 absolute z-40 flex h-full w-full flex-col items-center justify-center gap-4 p-6 text-white"
+      class="absolute z-40 flex h-full w-full flex-col items-center justify-center gap-4 bg-roman-500 p-6 text-white"
       x-data
       x-show="!$store.state.quizLoaded || $store.state.questions?.length === 0"
-      x-transition.opacity.duration.2000ms
+      x-transition.opacity.duration.1000ms
     >
       <img
         class="h-24 w-24 animate-[spin_3s_linear_infinite]"
@@ -157,7 +157,7 @@
         class="w-full max-w-5xl md:p-12"
         x-show="$store.state.quizLoaded && $store.state.questions?.length > 0"
         x-cloak
-        x-transition.opacity.duration.1000ms
+        x-transition.opacity.duration.500ms
       >
         <div class="px-4 pb-4 pt-4 md:px-0 md:pt-0">
           <a
@@ -186,18 +186,18 @@
           >
             <!-- Image -->
             <div
-              class="relative h-24 overflow-hidden sm:aspect-video sm:h-auto md:rounded-lg"
+              class="relative h-24 overflow-hidden sm:h-auto sm:w-full md:rounded-lg"
               x-show="$store.state.curQues?.imageURL"
             >
               <div
                 class="absolute h-full w-full animate-pulse bg-neutral-200"
               ></div>
               <img
-                class="absolute h-full w-full object-cover"
+                class="relative object-cover"
                 :class="transitionOpacity()"
                 :src="$store.state.curQues?.imageURL"
                 id="image"
-                :alt="` Image for question ${$store.state.curIdx + 1}`"
+                :alt="`Image for question ${$store.state.curIdx + 1}`"
               />
             </div>
 

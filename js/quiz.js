@@ -47,7 +47,7 @@ document.addEventListener('alpine:init', async () => {
     waitUntilTime(() => {
       state.questions = questions;
       state.quizLoaded = true;
-    }, 2);
+    }, 1);
   } catch {
     state.questions = [];
     state.quizLoaded = true;

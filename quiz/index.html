@@ -56,15 +56,16 @@
   <body>
     <!-- Loading spinner -->
     <div
-      class="absolute z-40 flex h-full w-full flex-col items-center justify-center gap-4 bg-white p-6"
+      class="bg-roman-500 absolute z-40 flex h-full w-full flex-col items-center justify-center gap-4 p-6 text-white"
       x-data
       x-show="!$store.state.quizLoaded || $store.state.questions?.length === 0"
-      x-transition
+      x-transition.opacity.duration.2000ms
     >
       <img
         class="h-24 w-24 animate-[spin_3s_linear_infinite]"
         src="/assets/favicon.svg"
         x-show="$store.state.questions?.length !== 0"
+        x-transition.opacity
       />
       <div
         class="flex max-w-sm flex-col items-start gap-2"
@@ -78,16 +79,22 @@
         </p>
         <div class="flex flex-col gap-1">
           <p>
-            Spreadsheet ID:
-            <code x-text="`${$store.state.quizParams.spreadsheetID}`"></code>
+            Spreadsheet ID:&nbsp;
+            <code
+              class="text-black"
+              x-text="`${$store.state.quizParams.spreadsheetID}`"
+            ></code>
           </p>
           <p>
-            Sheet name:
-            <code x-text="`${$store.state.quizParams.sheetName}`"></code>
+            Sheet name:&nbsp;
+            <code
+              class="text-black"
+              x-text="`${$store.state.quizParams.sheetName}`"
+            ></code>
           </p>
         </div>
         <br />
-        <a href="/">Go back</a>
+        <a class="text-blue-50" href="/">Go back</a>
       </div>
     </div>
 
